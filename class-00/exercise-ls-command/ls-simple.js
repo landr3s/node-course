@@ -2,14 +2,14 @@ import { readdir } from 'node:fs/promises'
 
 const folder = process.argv[2] ?? '.'
 
-const ls = (folder) => {
+const ls = folder => {
   readdir(folder)
-    .then((files) => {
-      files.forEach((file) => {
+    .then(files => {
+      files.forEach(file => {
         console.log(file)
       })
     })
-    .catch((error) => {
+    .catch(error => {
       console.error(error)
     })
 }

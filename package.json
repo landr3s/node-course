@@ -15,5 +15,9 @@
   },
   "eslintConfig": {
     "extends": "./node_modules/standard/eslintrc.json"
+  },
+  "dependencies": {
+    "express": "4.21.1",
+    "picocolors": "1.1.1"
   }
 }

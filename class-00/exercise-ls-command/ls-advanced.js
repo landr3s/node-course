@@ -1,18 +1,19 @@
 import { readdir, stat } from 'node:fs/promises'
-import { basename, join } from 'node:path'
+import { join } from 'node:path'
 
-const folder = process.argv[2] ?? '.'
+const directory = process.argv[2] ?? '.'
 
-async function ls(directory) {
+async function ls(folder) {
   let files
   try {
-    files = await readdir(directory)
+    files = await readdir(folder)
   } catch (error) {
     console.error('Error reading folder')
   }
+
   const filesPromises = files.map(async file => {
     let stats
-    const filePath = join(directory, file)
+    const filePath = join(folder, file)
     try {
       stats = await stat(filePath)
     } catch (error) {
@@ -28,11 +29,11 @@ async function ls(directory) {
     )} ${fileModified}`
   })
 
-  const filesInfo = await Promise.all(filesPromises)
+  const fileInfos = await Promise.all(filesPromises)
 
-  filesInfo.forEach(async fileInfo => {
-    console.log(fileInfo)
+  fileInfos.forEach(async element => {
+    console.log(element)
   })
 }
 
-ls(folder)
+ls(directory)
