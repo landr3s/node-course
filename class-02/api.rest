@@ -1,2 +1,24 @@
 ### Get all movies
 GET http://localhost:3000/movies
+### Get all movies
+GET http://localhost:3000/movies?genre=drama
+### Get all movies
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+    "title": "Pulp Fiction",
+    "year": 1994,
+    "director": "Andres Tarantino",
+    "duration": 154,
+    "poster": "https://www.themoviedb.org/t/p/original/vQWk5YBFWF4bZaofAbv0tShwBvQ.jpg",
+    "genre": ["Crime", "Drama"]
+}
+
+### Update a movie
+PATCH http://localhost:3000/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+Content-Type: application/json
+
+{
+    "title": "XDD"
+}
