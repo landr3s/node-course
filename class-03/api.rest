@@ -1,0 +1,28 @@
+### Get all movies
+GET http://localhost:3000/movies
+### Get movies by filter
+GET http://localhost:3000/movies?genre=Romance
+### Get movie by ID
+GET http://localhost:3000/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+### Post a movie
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+    "title": "Pulp Fiction",
+    "year": 1994,
+    "director": "Laskin Tarantino",
+    "duration": 154,
+    "poster": "https://www.themoviedb.org/t/p/original/vQWk5YBFWF4bZaofAbv0tShwBvQ.jpg",
+    "genre": ["Crime", "Drama"]
+}
+
+### Update a movie
+PATCH http://localhost:3000/movies/3fda052c-899f-44cf-94b4-c64022b7feb6
+Content-Type: application/json
+
+{
+    "title": "la pelicula de laskin"
+}
+### Delete a movie
+DELETE http://localhost:3000/movies/3fda052c-899f-44cf-94b4-c64022b7feb6

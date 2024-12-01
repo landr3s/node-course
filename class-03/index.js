@@ -1,10 +1,16 @@
 import express from 'express'
-import moviesRouter from './routes/movies.js'
+import { corsMiddleware } from './middlewares/cors.js'
+import { createMovieRouter } from './routes/movies.js'
 
-const app = express()
-const PORT = process.env.PORT ?? 3000
-app.use('/movies', moviesRouter)
+export const createApp = ({ movieModel }) => {
+  const app = express()
+  app.use(express.json())
+  app.use(corsMiddleware())
 
-app.listen(PORT, () => {
-  console.log(`Server running on port http://localhost:${PORT}`)
-})
+  const PORT = process.env.PORT ?? 3000
+  app.use('/movies', createMovieRouter({ movieModel }))
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port http://localhost:${PORT}`)
+  })
+}

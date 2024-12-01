@@ -1,18 +1,21 @@
 import { Router } from 'express'
-import fs from 'node:fs'
+import { MovieController } from '../controllers/movies.js'
+import { MovieModel } from '../models/local/movie.js'
 
-const moviesRouter = Router()
-const movies = JSON.parse(fs.readFileSync('./movies.json'))
+export const createMovieRouter = ({ movieModel }) => {
+  const moviesRouter = Router()
 
-moviesRouter.get('/', (req, res) => {
-  const { genre } = req.params
-  if (genre) {
-    const filteredMovies = movies.map(movie =>
-      movie.genre.includes(g => g.toLowerCase() === genre.toLowerCase())
-    )
-    res.json(filteredMovies)
-  }
-  res.json(movies)
-})
+  const movieController = new MovieController({ movieModel })
 
-export default moviesRouter
+  moviesRouter.get('/', movieController.getAll)
+
+  moviesRouter.get('/:id', movieController.getById)
+
+  moviesRouter.post('/', movieController.create)
+
+  moviesRouter.patch('/:id', movieController.update)
+
+  moviesRouter.delete('/:id', movieController.delete)
+
+  return moviesRouter
+}
