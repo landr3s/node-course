@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Chat</title>
+  </head>
+  <script type="module">
+    import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
+
+    const socket = io()
+
+    const $ = element => document.getElementById(element)
+    const form = $('form')
+    const input = $('input')
+    const button = $('button')
+    const ul = $('ul')
+
+    socket.on('chat message', msg => {
+      const li = `<li>${msg}</li>`
+      ul.insertAdjacentHTML('beforeend', li)
+    })
+
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      if (input.value) {
+        socket.emit('chat message', input.value)
+        input.value = ''
+      }
+    })
+  </script>
+  <style>
+    *,
+    *::after,
+    *::before {
+      box-sizing: border-box;
+    }
+
+    :root {
+      color-scheme: light dark;
+    }
+    body {
+      display: grid;
+      place-content: center;
+      height: 100vh;
+      grid-template-rows: 1fr;
+      padding: 36px;
+    }
+
+    #chat {
+      height: 100%;
+      width: 320px;
+      position: absolute;
+      border: 1px solid #ccc;
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    #chat > form {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      height: 48px;
+    }
+
+    input {
+      border-radius: 99999px;
+      padding: 0 8px;
+      flex: 1;
+      border: 1px solid #fff;
+      margin: 4px;
+    }
+
+    input:focus {
+      outline: 0;
+    }
+
+    button {
+      background: #09fc;
+      border-radius: 4px;
+      margin: 4px;
+      padding: 0 2px;
+      border: 0;
+    }
+  </style>
+  <body>
+    <section id="chat">
+      <ul id="ul"></ul>
+      <form id="form">
+        <input
+          type="text"
+          placeholder="Type a message..."
+          id="input"
+        />
+        <button id="button">Send</button>
+      </form>
+    </section>
+  </body>
+</html>
